@@ -1,0 +1,14 @@
+body {
+    background: #f0f0f0
+}
+main {
+    min-height: 85vh;
+}
+
+footer {
+    text-align: center;
+}
+
+.siteImages {
+    width: 100%;
+}
