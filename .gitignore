@@ -1,5 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+backend/seeder.js
+
 # dependencies
 node_modules
 node_modules/
@@ -13,6 +15,7 @@ node_modules/
 /build
 
 # misc
+# Sensitive information gets gitignore and stored in .env file.
 .DS_Store
 .env
 .env.local

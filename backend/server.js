@@ -1,22 +1,31 @@
-const express = require("express")
+import colors from "colors"
+import { dirname } from "path"
+import { fileURLToPath } from "url"
+import express from "express"
+import dotenv from "dotenv"
+import connectDB from "./config/dbConnection.js"
+import siteRoutes from "./routes/siteRoutes.js"
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js"
 const app = express();
-const sites = require("./data/sites.js")
-
+// When using ES6 modules, these two variables are required to get the path of the images.
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+dotenv.config();
+connectDB();
 app.use(express.static(__dirname + "/public"));
 app.use("/public", express.static("images"))
+
+// Routes
 app.get("/", (req, res) => {
     res.send("API is running ...")
 })
-
-app.get("/api/sites", (req, res) => {
-    res.json(sites)
-})
-
-app.get("/api/sites/:id", (req, res) => {
-    const site = sites.find(site => site.id === req.params.id)
-    res.json(site)
-})
+app.use("/api/sites", siteRoutes)
 
 
+// Error Handler
+app.use(notFound)
+app.use(errorHandler)
 
-app.listen(5000, console.log("Server running on port 5000"))
+const PORT = process.env.PORT
+const DEVELOPMENT = process.env.NODE_ENV
+app.listen(PORT, () => console.log(`**** Server is running in ${DEVELOPMENT} on port ${PORT} ****`.brightBlue))
