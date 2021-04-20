@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
-import axios from "axios"
-export default function SiteScreen(props) {
-    const [siteData, setSiteData] = useState({})
-    useEffect(() => {
-        const fetchSite = async () => {
-            const { data } = await axios.get(`/api/sites/${props.match.params.id}`)
-            setSiteData(data)
-        }
-        fetchSite()
-    }, [props.match.params.id]) // Dependency a requirment in useEffect();
-    return (
+import { useDispatch, useSelector } from "react-redux"
+import { listSiteDetails } from "../actions/siteActions"
 
+export default function SiteScreen(props) {
+    const dispatch = useDispatch()
+    const siteDetails = useSelector(state => state.siteDetails)
+    const { loading, error, site } = siteDetails
+    useEffect(() => {
+        dispatch(listSiteDetails(props.match.params.id))
+    }, [props.match.params.id]) // Dependency a requirment in useEffect();
+    console.log(site)
+    return (
         <div>
-            <h1>{siteData.name}</h1>
-            <Link to="/">Go Home</Link>
+            {loading
+                ? <h1>Loading ....</h1>
+                : <div> <h1>{site.name}</h1> <Link to="/">Go Home</Link> </div>}
         </div>
     )
 }

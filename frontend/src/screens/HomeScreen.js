@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { listSites } from "../actions/siteActions"
 import Site from "../components/Site"
-import axios from "axios"
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -16,27 +17,31 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function HomeScreen() {
-    const [sites, setSites] = useState([])
-    useEffect(() => {
-        const fetchSites = async () => {
-            const { data } = await axios.get("/api/sites")
-            setSites(data)
-        }
-        fetchSites()
-    }, []) // Dependency a requirment in useEffect();
-
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const siteList = useSelector(state => state.siteList)
+    const { loading, error, sites } = siteList
+    useEffect(() => {
+        dispatch(listSites())
+    }, [dispatch]) // Dependency a requirment in useEffect();
+
     return (
         <div >
             <h3>Rectification Sites</h3>
-            <GridList className={classes.root}>
-                {sites.map(site => (
-                    <GridListTile
-                        key={site.id}>
-                        <Site siteData={site} />
-                    </GridListTile>
-                ))}
-            </GridList>
+            {loading
+                ? <h1>Loading ...</h1>
+                : error
+                    ? <h3>{error}</h3>
+                    :
+                    <GridList className={classes.root}>
+                        {sites.map(site => (
+                            <GridListTile
+                                key={site._id}>
+                                <Site siteData={site} />
+                            </GridListTile>
+                        ))}
+                    </GridList>
+            }
         </div>
     )
 }
