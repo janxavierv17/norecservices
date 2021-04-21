@@ -11,10 +11,10 @@ const fireDamperSchema = mongoose.Schema({
                 type: String,
                 required: true,
             },
-            image: {
+            rectificationPhotos: [{
                 type: String,
                 required: true,
-            },
+            }],
             comments: {
                 type: String,
                 required: true,
@@ -30,7 +30,7 @@ const fireDamperSchema = mongoose.Schema({
     timestamps: true,
 })
 const siteSchema = mongoose.Schema({
-    // This user has a relation/connection to the USER Model
+    // This user has a relation/connection to the USER Model 
     user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -44,16 +44,20 @@ const siteSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    siteImage: {
+        type: String,
+        required: true,
+    },
     address: {
         type: String,
         required: true,
     },
-    fireDamper: [fireDamperSchema],
     fireDamperCount: {
         type: Number,
         required: true,
         default: 0,
-    }
+    },
+    fireDamper: fireDamperSchema,
 }, {
     timestamps: true,
 })

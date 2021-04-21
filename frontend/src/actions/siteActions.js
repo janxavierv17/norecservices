@@ -36,10 +36,11 @@ export const listSiteDetails = (id) => async (dispatch) => {
             type: SITE_DETAILS_REQUEST
         })
         const { data } = await axios.get(`/api/sites/${id}`)
-        dispatch({
-            type: SITE_DETAILS_SUCCESS,
-            payload: data
-        })
+        dispatch(
+            {
+                type: SITE_DETAILS_SUCCESS,
+                payload: data
+            })
     } catch (error) {
         dispatch({
             type: SITE_DETAILS_FAIL,

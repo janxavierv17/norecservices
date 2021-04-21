@@ -10,13 +10,13 @@ export default function SiteScreen(props) {
     useEffect(() => {
         dispatch(listSiteDetails(props.match.params.id))
     }, [props.match.params.id]) // Dependency a requirment in useEffect();
-    console.log(site)
+
     return (
-        <div>
+        <>
             {loading
                 ? <h1>Loading ....</h1>
                 : <div> <h1>{site.name}</h1> <Link to="/">Go Home</Link> </div>}
-        </div>
+        </>
     )
 }
 
