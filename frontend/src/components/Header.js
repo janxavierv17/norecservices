@@ -56,7 +56,7 @@ const Header = () => {
                     <Typography variant="h6" className={classes.title}>
                         <ListItem color="inherit" button component={Link} to="/">Norec Services</ListItem>
                     </Typography>
-                    <Button component={Link} to="/login" color="inherit">Login</Button>
+                    <Button component={Link} to="user/login" color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
         </div>

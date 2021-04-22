@@ -5,7 +5,6 @@ const Footer = () => {
     return (
         <footer>
             <Container >
-                Copyright &copy; Norec Services
             </Container>
         </footer>
 
